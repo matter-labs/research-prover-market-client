@@ -1,6 +1,6 @@
 # Data Collection for Prover Market Design
 
-This is the specification of the API and example RPC client code for collecting data from provers
+This repository contains the specification of the API and an example RPC client code for collecting data from provers
 participating in the experiment related to the Auction Design for Prover Markets project.
 We implement the experiment using a simple RPC server publishing transaction batches and receiving the
 corresponding proofs from participants. The server records the responses in a database for later analysis.
