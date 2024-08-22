@@ -2,7 +2,7 @@
 
 This repository contains the specification of the API and an example RPC client code for collecting data from provers
 participating in the experiment related to the Auction Design for Prover Markets project.
-We implement the experiment using a simple RPC server publishing transaction batches and receiving the
+We implement the experiment with a simple RPC server that publishes transaction batches and receives the
 corresponding proofs from participants. The server records the responses in a database for later analysis.
 
 ## Basic Workflow
@@ -11,6 +11,8 @@ We (Matter Labs) run the RPC server and the participants run one client each. We
 that they will use as a parameter in all API calls. For each participant, the server makes transaction batches available
 (one at a time) for which the participant computes validity proofs. Once the participant (using their client) has
 submitted a validity proof for a batch, the server makes the next batch available.
+
+Concretely, the workflow is the following:
 
 1. Server publishes a transaction batch.
 2. Client obtains the batch URL using a `get_batch` RPC.
@@ -41,8 +43,8 @@ The following responses are possible to a `get_batch` request.
 
 - **200 &lt;JSON object&gt;**
 
-  If the request succeeds, it the path from which the batch to be proven can be downloaded (`batch_file`), along with
-  the identifier of the request itself (`request_id`). The request identifier will need to be used when submitting the
+  If the request succeeds, the API returns the path from which the batch to be proven can be downloaded (`batch_file`), along with
+  the identifier of the request itself (`request_id`). Participants must use the request identifier when submitting the
   corresponding proof. Here is an example response to a `get_batch` request.
   ```json
   {
@@ -67,7 +69,7 @@ The following responses are possible to a `get_batch` request.
 ### `submit_proof`
 
 #### Request
-The client invokes the `submit_proof` RPC by making a HTTP POST request to
+The client invokes the `submit_proof` RPC by making an HTTP POST request to
 ```
 http://<server-address>:<server-port>/get_batch/?participant_id=<participant-id>
 ```
@@ -90,11 +92,11 @@ The detailed meaning of the fields is the following.
   This value is required to pair the submission with the corresponding request on the server.
 - `proof_data`: The binary data produced by the prover, encoded as base64 string.
 - `proving_time`: The number of milliseconds it took to generate the proof. This **excludes** the time required for
-  downloading the batch. However, it must **include** the time for potentially allocating the required resources (if
-  that needs to be done for this proof), processing the batch, performing the actual proof generation, all the way until
+  downloading the batch. However, it must **include** the time for allocating the necessary resources (if
+  needed for this proof), processing the batch, performing and the actual proof generation, all the way until
   the proof is ready to be submitted.
-- `cost`: The direct monetary cost of computing the proof US Dollar **cents**. It includes all the costs that are
-  incurred **per proof**, but not constant one-time investments necessary to start the proving.
+- `cost`: The direct monetary cost of computing the proof in US Dollar **cents**. It includes all the costs that are
+  incurred **per proof**, excluding constant one-time investments necessary to start the proving.
   
   The `cost` **includes** items such as
   - Rental cost for cloud machines (if cloud is used)
@@ -112,7 +114,7 @@ The detailed meaning of the fields is the following.
   - Engineers' compensation for setting up the proving system
     (note that this is different from the engineer continuously maintaining the proving hardware and software,
     which should flow into the proving cost)
-- `price`: The minimal price for which the participant is willing to perform the computation of the proof, including
+- `price`: The minimal price for which the participant is willing to perform the proof computation, including
   the participant's profit margin. If this was an auction, the `price` would be the minimal value the participant would
   be willing to bid.
 - `deployment_version`: Identifier of the deployment that produced the proof. This can be an arbitrary number or string
