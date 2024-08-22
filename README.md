@@ -125,11 +125,6 @@ The detailed meaning of the fields is the following.
   stored elsewhere and communicated separately to the experiment operator.
 
 
-> **Note**: In the current setup, where batches are proven one by one, the request ID is not strictly necessary, as the
-> participant ID is sufficient to associate the submitted proof with the appropriate data structures. However, if we
-> support making multiple requests and proving multiple batches in parallel one day, the submitting the request ID
-> becomes necessary. We thus always require specifying the request ID to keep the API stable.
-
 #### Response
 
 The following responses are possible to a `submit_proof` request.
