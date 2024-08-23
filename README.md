@@ -105,6 +105,7 @@ The detailed meaning of the fields is the following.
   - Network communication (e.g. ISP fees)
   - Rent for the space where the machines are located
   - Maintenance of the prover hardware and software
+
   All these costs must be considered in proportion to what was actually used by the proving. For example, if the prover
   hardware is co-located with other machines in the same room, only a fraction of the rent for that room and air
   conditioning that corresponds to the consumption of the prover hardware must be considered.
