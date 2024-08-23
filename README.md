@@ -136,12 +136,38 @@ The following responses are possible to a `submit_proof` request.
 
 ## Client
 
-We provide a simple client implementation that can be used almost directly with minimal modifications.
+We provide a simple Python client implementation that can be used almost directly with minimal modifications.
 Feel free to also completely ignore the client and implement another one - the API specification should provide all the
-necessary information.
+necessary information. The provided client fetches a batch, initiates the computation of the validity proof, and
+submits the proof back to the server.
 
-The provided client fetches a batch, initiates the computation of the validity proof, and submits the proof back to the
-server. To run the client, execute the following command.
+### Installing
+
+Before running the client a Python environment needs to be set up. The following has been tested on Ubuntu Linux, but
+equivalent (if not the same) steps should work on other systems.
+From within the root directory of the cloned repository (probably `research-prover-market-client`),
+1. Install Python 3, pip and the virtual environment.
+  ```shell
+  sudo apt update
+  sudo apt install -y python3 python3-pip python3-venv
+  ```
+2. Create a virtual environment and activate it.
+  ```shell
+  python3 -m venv .venv
+  . .venv/bin/activate
+```
+3. Install the `requests` python package.
+  ```shell
+  pip3 install requests
+  ```
+
+If using Ubuntu Linux, these steps can be performed automatically by running the [install-ubuntu.sh](/install-ubuntu.sh)
+script. If using the script, 
+
+### Running
+
+To run the client, execute the following command from within the Python virtual environment
+(that can be activated by executing `. .venv/bin/activate`)
 ```shell
 python3 client.py participant-id http://<server-address>:<server-port>
 ```
